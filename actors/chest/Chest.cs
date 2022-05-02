@@ -11,17 +11,16 @@ namespace TopDownGame
 
         public override void _Ready()
         {
+            sprite = GetNode<AnimatedSprite>("Sprite");
             nodePlayer = GetTree().Root.GetNode<Entity>("World/YSort/Player");
             player = (Entity)nodePlayer;
-            player.PlayerSpawned += SpawnCompleted;
-            player.Connect("interacted", this, "OpenChest");
-            sprite = GetNode<AnimatedSprite>("Sprite");
+
         }
         public void SpawnCompleted(Entity _player)
         {
-            _player.Connect("interacted", this, "OpenChest");
-            _player.PlayerSpawned += SpawnCompleted;
             player = _player;
+            player.Connect("interacted", this, "OpenChest");
+            player.PlayerSpawned += SpawnCompleted;
         }
         private void _on_Sprite_animation_finished()
         {

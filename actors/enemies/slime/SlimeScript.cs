@@ -24,7 +24,6 @@ namespace TopDownGame.Characters
             CurrentState = EntityState.WANDER;
             ChosenType = EntityType.ENEMY;
         }
-
         public override void _PhysicsProcess(float delta)
         {
             if (Bumping.IsColliding())

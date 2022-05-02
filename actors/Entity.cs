@@ -112,7 +112,6 @@ namespace TopDownGame
         {
             throw new NotImplementedException();
         }
-
         public virtual void TakeDamage(int damage)
         {
             Health -= damage;
@@ -154,7 +153,6 @@ namespace TopDownGame
             AddChild(BSInstance);
             BSInstance.SetDeferred("emitting", true);
         }
-
         private void PlayerDamageTaken()
         {
             var BSInstance = (Particles2D)damageIndicator.Instance();
@@ -163,7 +161,6 @@ namespace TopDownGame
             AddChild(BSInstance);
             BSInstance.SetDeferred("emitting", true);
         }
-
         // Handle Signals
         private void _on_Entity_Hurtbox_InvincibilityEnded()
         {
@@ -192,11 +189,9 @@ namespace TopDownGame
                 HurtBox.StartInvincibility(0.5F);
             }
         }
-
         public void _on_Entity_died()
         {
             Death();
         }
-
     }
 }

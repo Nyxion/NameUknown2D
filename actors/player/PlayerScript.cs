@@ -11,7 +11,6 @@ namespace TopDownGame.Characters
         private Sprite playerSprite;
         private InteractArea interactArea;
         private AnimationNodeStateMachinePlayback animationState;
-
         private bool _canInteract = false;
         public bool Interactable
         {
@@ -45,7 +44,6 @@ namespace TopDownGame.Characters
             CurrentState = EntityState.MOVE;
             ChosenType = EntityType.PLAYER;
         }
-
         public override void _Input(InputEvent @event)
         {
             if (@event.IsActionPressed("sword_attack"))
@@ -90,31 +88,22 @@ namespace TopDownGame.Characters
             }
             Velocity = MoveAndSlide(Velocity);
         }
-
         public override void _AttackState(float delta)
         {
             Velocity = Velocity.MoveToward(Vector2.Zero, (Friction * delta) / 2);
             Velocity = MoveAndSlide(Velocity);
             animationState.Travel("Attack");
         }
-
         public void AttackAnimationFinished()
         {
             // Move state
             CurrentState = EntityState.MOVE;
         }
-
         public void AbleToInteract(Area2D chest, int able)
         {
             if (able == 0 && chest == null) return;
 
             currentChest = chest;
         }
-
-        // public void SetInteractable(bool inArea, Area2D chest)
-        // {
-        //     Interactable = inArea;
-        //     currentChest = chest;
-        // }
     }
 }

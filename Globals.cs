@@ -1,10 +1,11 @@
 using Godot;
-using System;
 
 namespace TopDownGame
 {
     public class Globals : Node
     {
+        // Maybe remove, dunno if i wanna do a global player or not
+        // for respawning and shit.
         private Entity _player;
         public Entity Player
         {
@@ -38,7 +39,7 @@ namespace TopDownGame
 
         public void LoadNewScene(Path scenePath)
         {
-
+            throw new System.NotImplementedException();
         }
     }
 
