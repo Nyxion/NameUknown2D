@@ -11,33 +11,26 @@ namespace TopDownGame.UI
         private PackedScene fullHeart = ResourceLoader.Load<PackedScene>("res://UI/FullHeart.tscn");
         private Node nodePlayer;
         private Entity player;
-        private int maxHearts = 0;
-        private int hearts = 0;
         private List<TextureRect> heartArray = new List<TextureRect>();
         public override void _Ready()
         {
             nodePlayer = GetTree().Root.GetNode<Entity>("World/YSort/Player");
             player = (Entity)nodePlayer;
-            player.Connect("hp_changed", this, "SetHearts");
-            player.Connect("max_hp_changed", this, "SetMaxHearts");
-            player.PlayerSpawned += SpawnCompleted;
-            InitHearts();
+            InitHeartsUI();
         }
         public void SpawnCompleted(Entity _player)
         {
-            _player.Connect("hp_changed", this, "SetHearts");
-            _player.PlayerSpawned += SpawnCompleted;
             player = _player;
-
-            InitHearts();
+            InitHeartsUI();
         }
-        private void InitHearts()
+        private void InitHeartsUI()
         {
+            player.Connect("hp_changed", this, "SetHearts");
+            player.PlayerSpawned += SpawnCompleted;
+
             if (heartArray.Count >= 1) heartArray.Clear();
 
-            hearts = player.Health;
-
-            for (int i = 0; i < maxHearts; i++)
+            for (int i = 0; i < player.Health; i++)
             {
                 if (i % 2 == 0)
                 {
@@ -62,37 +55,58 @@ namespace TopDownGame.UI
         private void SetHearts(int value)
         {
             if (value == 0 && heartArray.Count <= 0) return;
-            if (heartArray.Count == maxHearts) return;
+            if (heartArray.Count == player.Health) return;
             TextureRect lastElement = heartArray[heartArray.Count - 1];
             String nameOfLast = lastElement.Name.ToLower();
 
-            if (hearts > value)
+            if (player.Health > value)
             {
-                if (nameOfLast.Contains("fullheart"))
-                {
-                    var tempHalfHeart = (TextureRect)halfHeart.Instance();
-                    tempHalfHeart.SetGlobalPosition(lastElement.RectGlobalPosition);
-                    RemoveChild(lastElement);
-                    AddChild(tempHalfHeart);
-                    heartArray.Remove(lastElement);
-                    heartArray.Add(tempHalfHeart);
-                }
-                else if (nameOfLast.Contains("halfheart"))
-                {
-                    RemoveChild(lastElement);
-                    heartArray.Remove(lastElement);
-                }
+                GD.Print("Lost a health point " + value + " - current: " + player.Health);
+                ModifyHealthUI(removing: true);
             }
             else
             {
-                GD.Print("Add half a heart.");
+                GD.Print("Gained a health point");
+                ModifyHealthUI();
             }
-            hearts = value;
         }
-        private void SetMaxHearts(int value)
+        private void ModifyHealthUI(bool removing = false)
         {
-            maxHearts = value;
-            if (maxHearts % 2 == 0) InitHearts();
+            TextureRect lastElement = heartArray[heartArray.Count - 1];
+            Vector2 lastElementPos = lastElement.RectGlobalPosition;
+            String nameOfLast = lastElement.Name.ToLower();
+
+            if (nameOfLast.Contains("fullheart") && removing)
+            {
+                TextureRect tempHalfHeart = (TextureRect)halfHeart.Instance();
+                tempHalfHeart.SetGlobalPosition(lastElement.RectGlobalPosition);
+                RemoveChild(lastElement);
+                AddChild(tempHalfHeart);
+                heartArray.Remove(lastElement);
+                heartArray.Add(tempHalfHeart);
+            }
+            else if (nameOfLast.Contains("halfheart") && removing)
+            {
+                RemoveChild(lastElement);
+                heartArray.Remove(lastElement);
+            }
+            else if (nameOfLast.Contains("halfheart") && !removing)
+            {
+                RemoveChild(lastElement);
+                heartArray.Remove(lastElement);
+
+                TextureRect tempFullHeart = (TextureRect)fullHeart.Instance();
+                tempFullHeart.SetGlobalPosition(new Vector2(lastElementPos.x, lastElementPos.y));
+                AddChild(tempFullHeart);
+                heartArray.Add(tempFullHeart);
+            }
+            else if (nameOfLast.Contains("fullheart") && !removing)
+            {
+                TextureRect tempHalfHeart = (TextureRect)halfHeart.Instance();
+                tempHalfHeart.SetGlobalPosition(new Vector2(lastElementPos.x + 16, lastElementPos.y));
+                AddChild(tempHalfHeart);
+                heartArray.Add(tempHalfHeart);
+            }
         }
     }
 }

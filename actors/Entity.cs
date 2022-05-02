@@ -165,15 +165,15 @@ namespace TopDownGame
         }
 
         // Handle Signals
-        public void _on_Entity_Hurtbox_InvincibilityEnded()
+        private void _on_Entity_Hurtbox_InvincibilityEnded()
         {
             OnHitAnimation.Play("RESET");
         }
-        public void _on_Entity_Hurtbox_InvincibilityStarted()
+        private void _on_Entity_Hurtbox_InvincibilityStarted()
         {
             OnHitAnimation.Play("Start");
         }
-        public void _on_Hurtbox_area_entered(Area2D area)
+        private void _on_Hurtbox_area_entered(Area2D area)
         {
             if (!HurtBox.Invincible)
             {

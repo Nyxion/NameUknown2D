@@ -1,28 +1,35 @@
 using Godot;
 using System;
 
-namespace topdownGame
+namespace TopDownGame
 {
     public class Chest : Area2D
     {
-        private Node Player;
-        private AnimatedSprite Sprite;
+        private Node nodePlayer;
+        private Entity player;
+        private AnimatedSprite sprite;
 
         public override void _Ready()
         {
-            Player = GetTree().Root.FindNode("Player", true, false);
-            Player.Connect("interacted", this, "OpenChest");
-            Sprite = GetNode<AnimatedSprite>("Sprite");
+            nodePlayer = GetTree().Root.GetNode<Entity>("World/YSort/Player");
+            player = (Entity)nodePlayer;
+            player.PlayerSpawned += SpawnCompleted;
+            player.Connect("interacted", this, "OpenChest");
+            sprite = GetNode<AnimatedSprite>("Sprite");
         }
-
+        public void SpawnCompleted(Entity _player)
+        {
+            _player.Connect("interacted", this, "OpenChest");
+            _player.PlayerSpawned += SpawnCompleted;
+            player = _player;
+        }
         private void _on_Sprite_animation_finished()
         {
-            if (Sprite.Animation == "Opening")
+            if (sprite.Animation == "Opening")
             {
                 QueueFree();
             }
         }
-
         private void OpenChest(Area2D chest)
         {
             if (chest == null) return;

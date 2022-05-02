@@ -47,7 +47,6 @@ position = Vector2( 99, 112 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 43, 65 )
-_maxHealth = 4
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
 position = Vector2( 56, 47 )
@@ -86,7 +85,7 @@ __meta__ = {
 }
 
 [node name="Add Health" type="Button" parent="UIElements/HContainer"]
-margin_right = 83.0
+margin_right = 208.0
 margin_bottom = 20.0
 focus_mode = 1
 shortcut_in_tooltip = false
@@ -94,15 +93,4 @@ enabled_focus_mode = 1
 text = "Add Health"
 script = ExtResource( 8 )
 
-[node name="Add MaxHealth" type="Button" parent="UIElements/HContainer"]
-margin_left = 95.0
-margin_right = 208.0
-margin_bottom = 20.0
-focus_mode = 1
-shortcut_in_tooltip = false
-enabled_focus_mode = 1
-text = "Add Max Health"
-script = ExtResource( 8 )
-
 [connection signal="pressed" from="UIElements/HContainer/Add Health" to="UIElements/HContainer/Add Health" method="_on_Add_Health_pressed"]
-[connection signal="pressed" from="UIElements/HContainer/Add MaxHealth" to="UIElements/HContainer/Add MaxHealth" method="_on_Add_MaxHealth_pressed"]
