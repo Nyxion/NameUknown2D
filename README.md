@@ -1,4 +1,4 @@
-# NameUknown2D - Dev branch for working on game
+# NameUknown2D
 
 Still dont know what this is going to be.
 
