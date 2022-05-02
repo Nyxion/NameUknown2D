@@ -5,6 +5,7 @@ output/
 export.cfg
 export_presets.cfg
 Exports/
+CHANGELOG.md
 
 # Imported translations (automatically generated from CSV files)
 *.translation
