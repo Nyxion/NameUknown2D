@@ -10,7 +10,7 @@ namespace TopDownGame.Debug
         private Entity player;
         public override void _Ready()
         {
-            nodePlayer = GetNode<Entity>("../../YSort/Player");
+            nodePlayer = GetTree().Root.GetNode<Entity>("World/YSort/Player");
             player = (Entity)nodePlayer;
             player.PlayerSpawned += SpawnCompleted;
         }
@@ -24,11 +24,6 @@ namespace TopDownGame.Debug
         {
             if (player == null) return;
             player.Health++;
-        }
-        private void _on_Add_MaxHealth_pressed()
-        {
-            if (player == null) return;
-            player.MaxHealth += 2;
         }
     }
 }

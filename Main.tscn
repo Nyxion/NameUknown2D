@@ -53,7 +53,7 @@ _maxHealth = 4
 position = Vector2( 56, 47 )
 remote_path = NodePath("../../../Camera2D")
 
-[node name="InteractableObjects" type="YSort" parent="YSort"]
+[node name="InteractableObjects" type="Node" parent="YSort"]
 
 [node name="Chest" parent="YSort/InteractableObjects" instance=ExtResource( 4 )]
 position = Vector2( 61, 118 )
@@ -61,40 +61,48 @@ position = Vector2( 61, 118 )
 [node name="Chest2" parent="YSort/InteractableObjects" instance=ExtResource( 4 )]
 position = Vector2( 152, 109 )
 
-[node name="Enemies" type="YSort" parent="YSort"]
-position = Vector2( 23, 16 )
+[node name="Enemies" type="Node" parent="YSort"]
 
 [node name="Slime" parent="YSort/Enemies" instance=ExtResource( 5 )]
 position = Vector2( 144, 60 )
 
 [node name="Slime2" parent="YSort/Enemies" instance=ExtResource( 5 )]
-position = Vector2( 152, 60 )
+position = Vector2( 192, 84 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UIElements" type="CanvasLayer" parent="."]
 
-[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 6 )]
+[node name="HealthUI" parent="UIElements" instance=ExtResource( 6 )]
 
-[node name="Debug UI" type="CanvasLayer" parent="."]
-
-[node name="Add Health" type="Button" parent="Debug UI"]
-margin_left = 4.0
-margin_top = 337.0
-margin_right = 87.0
-margin_bottom = 357.0
+[node name="HContainer" type="HSplitContainer" parent="UIElements"]
+margin_left = 2.0
+margin_top = 348.0
+margin_right = 210.0
+margin_bottom = 368.0
+rect_min_size = Vector2( 0, 20 )
 rect_scale = Vector2( 0.5, 0.5 )
+size_flags_vertical = 3
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Add Health" type="Button" parent="UIElements/HContainer"]
+margin_right = 83.0
+margin_bottom = 20.0
+focus_mode = 1
 shortcut_in_tooltip = false
+enabled_focus_mode = 1
 text = "Add Health"
 script = ExtResource( 8 )
 
-[node name="Add MaxHealth" type="Button" parent="Debug UI"]
-margin_left = 4.0
-margin_top = 349.0
-margin_right = 117.0
-margin_bottom = 369.0
-rect_scale = Vector2( 0.5, 0.5 )
+[node name="Add MaxHealth" type="Button" parent="UIElements/HContainer"]
+margin_left = 95.0
+margin_right = 208.0
+margin_bottom = 20.0
+focus_mode = 1
 shortcut_in_tooltip = false
+enabled_focus_mode = 1
 text = "Add Max Health"
 script = ExtResource( 8 )
 
-[connection signal="pressed" from="Debug UI/Add Health" to="Debug UI/Add Health" method="_on_Add_Health_pressed"]
-[connection signal="pressed" from="Debug UI/Add MaxHealth" to="Debug UI/Add MaxHealth" method="_on_Add_MaxHealth_pressed"]
+[connection signal="pressed" from="UIElements/HContainer/Add Health" to="UIElements/HContainer/Add Health" method="_on_Add_Health_pressed"]
+[connection signal="pressed" from="UIElements/HContainer/Add MaxHealth" to="UIElements/HContainer/Add MaxHealth" method="_on_Add_MaxHealth_pressed"]

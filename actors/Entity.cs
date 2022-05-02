@@ -8,8 +8,6 @@ namespace TopDownGame
     {
         private PackedScene damageIndicator = Load<PackedScene>("res://actors/particles/BloodSplatter.tscn");
         [Signal]
-        delegate void max_hp_changed(int value);
-        [Signal]
         delegate void hp_changed(int value);
         [Signal]
         delegate void died();
@@ -36,17 +34,7 @@ namespace TopDownGame
         [Export(PropertyHint.Range, "10,200,10")] public float MaxSpeed = 50;
 #pragma warning restore CS0414
         [Export(PropertyHint.Range, "10,500,10")] public float Friction = 300;
-        [Export] private int _maxHealth = 6;
-        public int MaxHealth
-        {
-            get => _maxHealth;
-            set
-            {
-                EmitSignal("max_hp_changed", value);
-                _maxHealth = value;
-            }
-        }
-        [Export] private int _health;
+        [Export] private int _health = 10;
         public int Health
         {
             get => _health;
@@ -64,7 +52,6 @@ namespace TopDownGame
         public Vector2 Velocity = Vector2.Zero;
         public override void _Ready()
         {
-            Health = MaxHealth;
             CurrentState = EntityState.IDLE;
         }
         public override void _PhysicsProcess(float delta)

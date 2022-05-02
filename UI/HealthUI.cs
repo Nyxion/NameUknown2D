@@ -9,7 +9,6 @@ namespace TopDownGame.UI
         private PackedScene emptyHeart = ResourceLoader.Load<PackedScene>("res://UI/EmptyHeart.tscn");
         private PackedScene halfHeart = ResourceLoader.Load<PackedScene>("res://UI/HalfHeart.tscn");
         private PackedScene fullHeart = ResourceLoader.Load<PackedScene>("res://UI/FullHeart.tscn");
-
         private Node nodePlayer;
         private Entity player;
         private int maxHearts = 0;
@@ -17,7 +16,7 @@ namespace TopDownGame.UI
         private List<TextureRect> heartArray = new List<TextureRect>();
         public override void _Ready()
         {
-            nodePlayer = GetNode<Entity>("../../YSort/Player");
+            nodePlayer = GetTree().Root.GetNode<Entity>("World/YSort/Player");
             player = (Entity)nodePlayer;
             player.Connect("hp_changed", this, "SetHearts");
             player.Connect("max_hp_changed", this, "SetMaxHearts");
@@ -26,12 +25,7 @@ namespace TopDownGame.UI
         }
         public void SpawnCompleted(Entity _player)
         {
-            GD.Print("OldPlayer: ", player);
-            GD.Print("SpawnCompleted");
-            GD.Print("newPLayer: ", _player);
-
             _player.Connect("hp_changed", this, "SetHearts");
-            _player.Connect("max_hp_changed", this, "SetMaxHearts");
             _player.PlayerSpawned += SpawnCompleted;
             player = _player;
 
@@ -41,7 +35,6 @@ namespace TopDownGame.UI
         {
             if (heartArray.Count >= 1) heartArray.Clear();
 
-            maxHearts = player.MaxHealth;
             hearts = player.Health;
 
             for (int i = 0; i < maxHearts; i++)

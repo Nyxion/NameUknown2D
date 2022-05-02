@@ -44,8 +44,6 @@ namespace TopDownGame.Characters
             // Start off on move state
             CurrentState = EntityState.MOVE;
             ChosenType = EntityType.PLAYER;
-
-            Health = MaxHealth;
         }
 
         public override void _Input(InputEvent @event)

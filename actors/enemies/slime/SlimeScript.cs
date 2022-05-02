@@ -23,8 +23,6 @@ namespace TopDownGame.Characters
             Sprite.Playing = true;
             CurrentState = EntityState.WANDER;
             ChosenType = EntityType.ENEMY;
-
-            Health = MaxHealth;
         }
 
         public override void _PhysicsProcess(float delta)
